@@ -3,17 +3,17 @@
 var db = require('./database');
 var Sequelize = require('sequelize');
 
-// Make sure you have `postgres` running!
+// Asegurate que tu Postgres este corriendo!
 
 var User = require('./user');
 
-//---------VVVV---------  your code below  ---------VVV----------
+//---------VVVV---------  tu código aquí abajo  ---------VVV----------
 
 var Article = db.define('article', {
 
 
 });
 
-//---------^^^---------  your code above  ---------^^^----------
+//---------^^^---------  tu código aquí arriba  ---------^^^----------
 
 module.exports = Article;

@@ -13,22 +13,22 @@ var User = require('../models/user');
 
 /**
  *
- * Article Route Tests
+ * Tests Article Route
  *
- * Do these after you finish the Article Model tests
+ * Hace esto después de terminar los primeros test del Modelo de Article
  *
  */
 describe('Articles Route:', function () {
 
   /**
-   * First we clear the database before beginning each run
+   * Primero limpiamos la base de datos antes de comenzar
    */
   before(function () {
     return db.sync({force: true});
   });
 
   /**
-   * Also, we empty the tables after each spec
+   * También, vaciamos las tablas luego de cada spec
    */
   afterEach(function () {
     return Promise.all([
@@ -39,23 +39,22 @@ describe('Articles Route:', function () {
 
   describe('GET /articles', function () {
     /**
-     * Problem 1
-     * We'll run a GET request to /articles
+     * Problema 1
+     * Haremos un request GET a /articles
      *
-     * 1.  It should return JSON (i.e., use res.json)
-     * 2.  Because there isn't anything in the DB, it should be an empty array
+     * 1.  Debería retornar JSON (..usa `res.json`)
+     * 2.  Porque no hay nada en la BD, debería ser un arreglo vacío
      *
-     * **Extra Credit**: Consider using app.param to automatically load
-     * in the Article whenever a param :id is detected
+     * **Credito Extra**: Considera usando app.param para automaticamente agregar el Article donde haya un param :id detectado
      */
-    xit('responds with an array via JSON', function () {
+    xit('responde con un array via JSON', function () {
 
       return agent
       .get('/articles')
       .expect('Content-Type', /json/)
       .expect(200)
       .expect(function (res) {
-        // res.body is the JSON return object
+        // res.body es el objeto JSON retornado
         expect(res.body).to.be.an.instanceOf(Array);
         expect(res.body).to.have.length(0);
       });
@@ -63,12 +62,12 @@ describe('Articles Route:', function () {
     });
 
     /**
-     * Problem 2
-     * Save an article in the database using our model and then retrieve it
-     * using the GET /articles route
+     * Problema 2
+     * Guarda un articulo en la base de datos usando nuestro modelo y
+     * luego retornalo usando la ruta GET /articles
      *
      */
-    xit('returns an article if there is one in the DB', function () {
+    xit('retorna un articulo si hay uno en la base de datos', function () {
 
       var article = Article.build({
         title: 'Test Article',
@@ -90,12 +89,12 @@ describe('Articles Route:', function () {
     });
 
     /**
-     * Problem 3
-     * Save a second article in the database using our model, then retrieve it
-     * using the GET /articles route
+     * Problema 3
+     * Guarda un segundo articulo en la base de datos usando nuestro
+     * modelo, luego retornalo usando la ruta GET /articles
      *
      */
-    xit('returns another article if there is one in the DB', function () {
+    xit('retorna otro articulo si hay uno en la base de datos', function () {
 
       var article1 = Article.build({
         title: 'Test Article',
@@ -127,7 +126,7 @@ describe('Articles Route:', function () {
   });
 
   /**
-   * Search for articles by ID
+   * Busca un articulo por su id
    */
   describe('GET /articles/:id', function () {
 
@@ -155,10 +154,10 @@ describe('Articles Route:', function () {
     });
 
     /**
-     * This is a proper GET /articles/ID request
-     * where we search by the ID of the article created above
+     * Este es un correcto pedido a GET /articles/:id donde buscamos
+     * por el id del articulo creado arriba.
      */
-    xit('returns the JSON of the article based on the id', function () {
+    xit('retorna el JSON del articulo basado en el id', function () {
 
       return agent
       .get('/articles/' + coolArticle.id)
@@ -173,9 +172,9 @@ describe('Articles Route:', function () {
     });
 
     /**
-     * Here we pass in a bad ID to the URL, we should get a 404 error
+     * Aquí pasamos un id incorrecto al URL, deberíamos tener un error 404
      */
-    xit('returns a 404 error if the ID is not correct', function () {
+    xit('retorna un error 404 si el id no es correcto', function () {
 
       return agent
       .get('/articles/76142896')
@@ -186,17 +185,18 @@ describe('Articles Route:', function () {
   });
 
   /**
-   * Series of tests to test creation of new Articles using a POST
-   * request to /articles
+   * Series de tests para testear la creación de nuevos Articles
+   * usando un POST request a /articles
    */
   describe('POST /articles', function () {
 
     /**
-     * Test the creation of an article
-     * Here we don't get back just the article, we get back an object of this type, which you construct:
+     * Testea la creación de un articulo
+     * Aquí nosotros no solo conseguimos devuelta el articulo,
+     * obtenemos un objeto de este tipo, el cual tu construyes:
      *  {
      *    message: 'Created successfully',
-     *    article: <the created article instance>
+     *    article: <la instancia del articulo creado>
      *  }
      *
      */
@@ -217,20 +217,21 @@ describe('Articles Route:', function () {
 
     });
 
-    // This one should fail with a 500 because we don't set the article.content
-    xit('does not create a new article without content', function () {
+    // Esta debería fallar con un 500 porque no seteamos el article.content
+
+    xit('no crea un nuevo articulo sin contenido', function () {
 
       return agent
       .post('/articles')
       .send({
-        title: 'This Article Should Not Be Allowed'
+        title: 'Este articulo no debería ser permitido'
       })
       .expect(500);
 
     });
 
-    // Check if the articles were actually saved to the database
-    xit('saves the article to the DB', function () {
+    // Chequeá si los articulos fueron realmente guardados a la base de datos
+    xit('guarda los articulos a la BD', function () {
 
       return agent
       .post('/articles')
@@ -251,15 +252,16 @@ describe('Articles Route:', function () {
 
     });
 
-    // Do not assume async operations (like db writes) will work; always check
-    xit('sends back JSON of the actual created article, not just the POSTed data', function () {
+    // No asumas que las operaciones async (como escrituras en la BD)
+    // va a funcionar. Siempre chequeá
+    xit('Envía devuelta JSON del articulo creado, no solo la data POSTeada', function () {
 
       return agent
       .post('/articles')
       .send({
         title: 'Coconuts',
         content: 'A full-sized coconut weighs about 1.44 kg (3.2 lb).',
-        extraneous: 'Sequelize will quietly ignore this non-schema property'
+        extraneous: 'Sequelize va a ignorar silenciosamente esta propiedad que no es del esquema'
       })
       .expect(200)
       .expect(function (res) {
@@ -272,8 +274,8 @@ describe('Articles Route:', function () {
   });
 
   /**
-   * Series of specs to test updating of Articles using a PUT
-   * request to /articles/:id
+   * Series de specs para testear actualizar los Articles usando pedido PUT
+   *  a /articles/:id
    */
   describe('PUT /articles/:id', function () {
 
@@ -292,15 +294,16 @@ describe('Articles Route:', function () {
     });
 
     /**
-     * Test the updating of an article
-     * Here we don't get back just the article, we get back an object of this type, which you construct:
+     * Testeá la actualización de un articulo
+     * Aquí no tenemos devuelta solo el artículo, sino que tenemos un objeto
+     * de este tipo, que tu construyes
      *  {
      *    message: 'Updated successfully',
-     *    article: <the updated article instance>
+     *    article: <la instancia del articulo actualizado>
      *  }
      *
      **/
-    xit('updates an article', function () {
+    xit('actualiza un article', function () {
 
       return agent
       .put('/articles/' + article.id)
@@ -317,7 +320,7 @@ describe('Articles Route:', function () {
 
     });
 
-    xit('saves updates to the DB', function () {
+    xit('guarda la actualización a la BD', function () {
 
       return agent
       .put('/articles/' + article.id)
@@ -334,7 +337,7 @@ describe('Articles Route:', function () {
 
     });
 
-    xit('gets 500 for invalid update', function () {
+    xit('Obtiene un 500 por un update invalido', function () {
 
       return agent
       .put('/articles/' + article.id)

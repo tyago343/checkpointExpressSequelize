@@ -17,9 +17,9 @@
     "express": "^4.13.3",
     "fs-misc": "^2.0.0",
     "morgan": "^1.7.0",
-    "pg": "^4.5.5",
+    "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.4.0",
+    "sequelize": "^4.13.3",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^4.0.2"
   },

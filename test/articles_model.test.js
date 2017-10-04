@@ -8,23 +8,23 @@ var db = require('../models/database');
 
 /**
  *
- * Start here!
+ * Comenzá Aca!
  *
- * These tests describe the model that you'll be writing in models/article.js
+ * Estos tests describen el modelo que vas a escribir en models/article.js
  *
  */
 
-describe('The `Article` model', function () {
+describe('El modelo `Article`', function () {
 
   /**
-   * First we clear the database and recreate the tables before beginning a run
+   * Primero limpiamos la base de datos y recreamos las tablas antes de empezar
    */
   before(function () {
     return db.sync({force: true});
   });
 
   /**
-   * Next, we create an (un-saved!) article instance before every spec
+   * Luego, creamos una instancia de article (sin guardar!) antes de cada spec
    */
   var fullText = 'The South African cliff swallow (Petrochelidon spilodera), also known as the South African swallow, is a species of bird in the Hirundinidae family.';
 
@@ -37,7 +37,7 @@ describe('The `Article` model', function () {
   });
 
   /**
-   * Also, we empty the tables after each spec
+   * Ademas, vaciamos las tablas luego de cada spec
    */
   afterEach(function () {
     return Promise.all([
@@ -46,14 +46,14 @@ describe('The `Article` model', function () {
     ]);
   });
 
-  describe('attributes definition', function(){
+  describe('definción de atributos', function(){
 
     /**
-     * Your model should have two fields (both required): `title` and `content`.
+     * Tu modelo debería tener dos campos (ambos requeridos): `title` y `content`.
      *
      * http://docs.sequelizejs.com/manual/tutorial/models-definition.html
      */
-    it('includes `title` and `content` fields', function () {
+    it('incluye los campos `title` y `content`', function () {
 
       return article.save()
       .then(function (savedArticle) {
@@ -63,13 +63,13 @@ describe('The `Article` model', function () {
 
     });
 
-    xit('requires `content`', function () {
+    xit('requiere `content`', function () {
 
       article.content = null;
 
       return article.validate()
       .then(function () {
-        throw new Error('validation should fail when content is null');
+        throw new Error('la validación debe fallar cuando content es null');
       },
       function(result) {
         expect(result).to.be.an.instanceOf(Error);
@@ -77,13 +77,13 @@ describe('The `Article` model', function () {
 
     });
 
-    xit('requires `title` (in a more strict way than for `content`)', function () {
+    xit('requiere `title` (en una forma más estricta que para `content)', function () {
 
       article.title = '';
 
       return article.validate()
       .then(function () {
-        throw new Error('validation should fail when content is empty');
+        throw new Error('La validación debe fallar cuando title esta vacío');
       },
       function (result) {
         expect(result).to.be.an.instanceOf(Error);
@@ -92,7 +92,7 @@ describe('The `Article` model', function () {
 
     });
 
-    xit('can handle long `content`', function() {
+    xit('puede manejar `content` extenso', function() {
 
       var articleContent = 'WALL-E (stylized with an interpunct as WALL·E) is a 2008 American computer-animated science-fiction comedy film produced by Pixar Animation Studios and released by Walt Disney Pictures. Directed by Andrew Stanton, the story follows a robot named WALL-E, who is designed to clean up an abandoned, waste-covered Earth far in the future. He falls in love with another robot named EVE, who also has a programmed task, and follows her into outer space on an adventure that changes the destiny of both his kind and humanity. Both robots exhibit an appearance of free will and emotions similar to humans, which develop further as the film progresses.';
 
@@ -111,24 +111,26 @@ describe('The `Article` model', function () {
   });
 
 /**
- * SPECIAL NOTE: at this point, you have defined enough of the Article model to
- * move on to the Routes tests. The rest of these specs, while necessary to
- * fully pass the Model suite, are not necessary for the Routes suite. Bear in
- * mind that the Routes suite depends on a WORKING model, so if you break the
- * Article model in your code below, the Routes will also fail. Make commits!
+ * NOTA ESPECIAL: para este punto, haz definido suficiente del modelo
+ * artículo para continuar con tus Routes tests. El resto de estos specs,
+ * aunque necesarios para pasar completamente los tests de Model, no son
+ * necesarios para los tests de Routes. Manten en mente que los tests de
+ * Routes dependen de un modelo que Funciona, así que si rompes el modelo
+ * Article en tu código, las Routes también van a fallar. Hace commits!
  */
 
-  describe('options definition', function(){
+  describe('definición de opciones', function(){
 
-    describe('`snippet` virtual field', function(){
+    describe('`snippet` campo virtual', function(){
 
       /**
-       * Set up a virtual field (check out sequelize getter methods) called `snippet`
-       * that returns the first 23 characters of the content followed by "...".
+       * Configurá un campo virtual (Fijate en los getter methods de
+       * sequelize) llamado `snippet` que devuelva los primeros 23
+       * characteres del contentido continuado por un "...".
        *
        * http://docs.sequelizejs.com/manual/tutorial/models-definition.html#defining-as-part-of-the-model-options
        */
-      xit('evaluates to the first 23 characters of the `content` appended with "..."', function () {
+      xit('Evalua a los primeros 23 caracteres del `content` anexado con "..."', function () {
 
         expect(article.snippet).to.equal('The South African cliff...');
 
@@ -140,8 +142,8 @@ describe('The `Article` model', function () {
 
       });
 
-      // This is mostly to avoid a corner case seen during `Model.update`.
-      xit('returns empty string for missing `content`', function(){
+      // Esto es principalmente para evitar un caso limite visto durante `Model.update`
+      xit('retorna un empty string para contenido faltante', function(){
 
         article.content = undefined;
 
@@ -151,17 +153,19 @@ describe('The `Article` model', function () {
 
     });
 
-    describe('`truncate` instance method', function(){
+    describe('metodo de instancia: `truncate`', function(){
 
       /**
-       * Set up an instance method (check out sequelize instanceMethods) called `truncate`
-       * that will shorten (change!) the article instance content to a passed-in length.
-       * This method does not save to the backend, it just modifies the Sequelize
-       * object so the user can choose if and when to actually save.
+       * Configurá un metodo de instancia (Fijate los instanceMethods de
+       * sequelize) llamado `truncate` que va a acortar (cambiar!) el
+       * `content` de una instancia a un length que te pasen como parametro.
+       * Este metodo no guarda en la base de datos, solo modifica el objeto
+       * de Sequelize para que el usuario pueda elegir si y cuando lo quiere
+       * guardar.
        *
        * http://docs.sequelizejs.com/manual/tutorial/models-definition.html#expansion-of-models
        */
-      xit('truncates the `content`', function () {
+      xit('trunca el `content`', function () {
 
         expect(article.content).to.equal(fullText);
 
@@ -170,7 +174,7 @@ describe('The `Article` model', function () {
 
       });
 
-      xit('accepts any length', function () {
+      xit('acepta cualquier length', function () {
 
         expect(article.content).to.equal(fullText);
 
@@ -180,7 +184,7 @@ describe('The `Article` model', function () {
 
       });
 
-      xit('does not save the instance once truncated', function() {
+      xit('No guarda la instancia una vez truncada', function() {
 
         expect(article.content).to.equal(fullText);
 
@@ -196,11 +200,11 @@ describe('The `Article` model', function () {
 
     });
 
-    describe('`findByTitle` class method', function(){
+    describe('Metodo de Clase: `findByTitle`', function(){
 
       /**
-       * Set up a class method called `findByTitle` that's a convenience
-       * method to find a *single* document by its title.
+       * Seteá un metodo de clase llamado findByTitle que nos va a servir
+       * para encontar *un solo* documento por su titulo.
        *
        * http://docs.sequelizejs.com/manual/tutorial/models-definition.html#expansion-of-models
        */
@@ -216,7 +220,7 @@ describe('The `Article` model', function () {
         return Promise.all(articles);
       });
 
-      xit('finds one specific article by its `title`', function () {
+      xit('Encuentra un artículo especifico por su `title`', function () {
 
         return Article.findByTitle('Migratory Birds')
         .then(function (foundArticle) {
@@ -230,16 +234,17 @@ describe('The `Article` model', function () {
 
   });
 
-  describe('associations', function(){
+  describe('asociaciones', function(){
 
     /**
-     * Add a `belongsTo` relationship between articles and users,
-     * but make sure the user is aliased as `author` for each article.
+     * Agregá una relación `belongsTo` entre articulos y users, pero
+     * asegurate que el usuario tiene el alias de 'author' para cada
+     * articulo.
      *
      * http://docs.sequelizejs.com/manual/tutorial/associations.html#belongsto
      */
 
-    xit("belongs to a user, who is stored as the article's `author`", function() {
+    xit("pertenece a un user, que es guardado como el `author` del articulo", function() {
 
       var creatingUser = User.create({ name: 'Alatar the Blue'});
       var creatingArticle = Article.create({
@@ -249,7 +254,7 @@ describe('The `Article` model', function () {
 
       return Promise.all([creatingUser, creatingArticle])
       .spread(function(createdUser, createdArticle) {
-        // this method `setAuthor` method automatically exists if you set up the association correctly
+        // este metodo `setAuthor` existe automaticamente si seteas la asociación correctamente
         return createdArticle.setAuthor(createdUser);
       })
       .then(function() {
@@ -268,13 +273,13 @@ describe('The `Article` model', function () {
   });
 
   /**
-   * Your model should have a field called `version`,
-   * which increases by 1 every time you save
+   * Tu modelo deberia tener un campo llamado `version`,
+   * el cual incrementa por 1 cada ves que guardas
    *
    * http://docs.sequelizejs.com/manual/tutorial/hooks.html
    */
 
-  describe('`version` field', function() {
+  describe('campo `version`', function() {
 
     beforeEach(function() {
       return Article.create({
@@ -283,7 +288,7 @@ describe('The `Article` model', function () {
       });
     });
 
-    xit('is originally 0, even if not explicitly set', function() {
+    xit('es originalmente 0, incluso si no esta explicitamente seteado', function() {
 
       return Article.findOne({where: {title: 'Biological Immortality'}})
       .then(function(foundArticle) {
@@ -292,7 +297,7 @@ describe('The `Article` model', function () {
 
     });
 
-    xit('increments by 1 every time the article is updated', function() {
+    xit('incrementa por 1 cada vez que el articulo se actualiza', function() {
 
       return Article.findOne({where: {title: 'Biological Immortality'}})
       .then(function(foundArticle) {
@@ -310,9 +315,8 @@ describe('The `Article` model', function () {
       .then(function(updatedArticle) {
         expect(updatedArticle.version).to.equal(2);
 
-        // "reload" the article from the database,
-        // just to make sure that the changes to the version
-        // are saved properly!
+        // "recarga" el articulo de la base de datos solo para asegurarse
+        // que los cambios a la versión son guardados apropiadamente!
         return updatedArticle.reload();
       })
       .then(function (reloadedArticle) {
@@ -323,23 +327,24 @@ describe('The `Article` model', function () {
 
   });
 
-  describe('extra credit `tags` field', function(){
+  describe('extra credito campo `tags`', function(){
 
-    /** EXTRA CREDIT
-     * Your Article model should have a tag field that's an array, but when we
-     * access it, we should get one string: the tags joined by a comma and space
+    /** EXTRA CREDITO
+     * Tu modelo Article debería tener un campo tag que es
+     * un arreglo, pero cuando lo accedemos, deberíamos tener
+     * un string: los stags unidos por una coma y espacio
      *
-     * Look at getters and setters:
+     * Mira a getters y setters:
      * http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters
      *
-     * To activate this spec, change `xit` to `it`
+     * Para activar este spec, cambia `xit` a `it`
      */
-    xit('is a custom getter', function () {
+    xit('es un getter customizado', function () {
 
-      // tags should have a `defaultValue` that is an empty array.
+      // tags deberían tener un `defaultValue` que es un arreglo vacío.
       expect(Article.attributes.tags.defaultValue).to.deep.equal([]);
 
-      // main functionality of tags
+      // funcionalidad principal de tags
       return Article.create({
         title: 'Taggy',
         content: 'So Taggy',
