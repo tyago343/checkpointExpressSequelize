@@ -208,7 +208,7 @@ describe('Articles Route:', function () {
         title: 'Awesome POST-Created Article',
         content: 'Can you believe I did this in a test?'
       })
-      .expect(200)
+      .expect(201)
       .expect(function (res) {
         expect(res.body.message).to.equal('Created successfully');
         expect(res.body.article.id).to.not.be.an('undefined');
@@ -239,7 +239,7 @@ describe('Articles Route:', function () {
         title: 'Awesome POST-Created Article',
         content: 'Can you believe I did this in a test?'
       })
-      .expect(200)
+      .expect(201)
       .then(function () {
         return Article.findOne({
           where: { title: 'Awesome POST-Created Article' }
@@ -263,7 +263,7 @@ describe('Articles Route:', function () {
         content: 'A full-sized coconut weighs about 1.44 kg (3.2 lb).',
         extraneous: 'Sequelize va a ignorar silenciosamente esta propiedad que no es del esquema'
       })
-      .expect(200)
+      .expect(201)
       .expect(function (res) {
         expect(res.body.article.extraneous).to.be.an('undefined');
         expect(res.body.article.createdAt).to.exist; // eslint-disable-line no-unused-expressions
